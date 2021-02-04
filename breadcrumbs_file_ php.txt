@@ -1,0 +1,65 @@
+
+<?php
+
+$category = array(
+        1 => array(
+            'id' => 1,
+            'parent_id' => 0,
+            'name' => 'Clothing'
+        ),
+        2 => array(
+            'id' => 2,
+            'parent_id' => 0,
+            'name' => 'Accessories'
+        ),
+        3 => array(
+            'id' => 3,
+            'parent_id' => 0,
+            'name' => 'Watches'
+        ),
+        4 => array(
+            'id' => 4,
+            'parent_id' => 1,
+            'name' => 'Women'
+        ),
+        5 => array(
+            'id' => 5,
+            'parent_id' => 1,
+            'name' => 'Men'
+        ),
+        6 => array(
+            'id' => 6,
+            'parent_id' => 4,
+            'name' => 'Tops'
+        ),
+        7 => array(
+            'id' => 7,
+            'parent_id' => 4,
+            'name' => 'Trousers'
+        ),
+        8 => array(
+            'id' => 8,
+            'parent_id' => 5,
+            'name' => 'T-shirts'
+            ),
+        );
+?>
+<?php 
+    function breadcrumber($array,$id){
+    static $result=[]; 
+    if(isset($array[$id])){  
+        $result[]='<a href="/category.php?id='. $array[$id]['id'] .'">'. $array[$id]['name'] .'</a>';
+        $parent=$array[$id]['parent_id'];  
+        unset($array[$id]);  
+        breadcrumber($array,$parent);  // recurse
+    }
+    return array_reverse($result);
+
+}
+
+
+echo implode(' > ',breadcrumber(array_column($category,NULL,'id'),8
+));
+
+
+?>
